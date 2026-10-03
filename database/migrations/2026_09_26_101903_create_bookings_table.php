@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bookings', function (Blueprint $table) {
+        Schema::create('booking', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('hewan_id')->constrained('hewans')->onDelete('cascade');
-            $table->foreignId('layanan_id')->constrained('layanans')->onDelete('cascade');
+            $table->foreignId('hewan_id')->constrained('hewan')->onDelete('cascade');
+            $table->foreignId('layanan_id')->constrained('layanan')->onDelete('cascade');
             $table->date('tanggal_masuk');
             $table->date('tanggal_keluar')->nullable();
             $table->enum('status', ['menunggu', 'diterima', 'ditolak', 'diproses', 'selesai'])->default('menunggu');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('booking');
     }
 };
