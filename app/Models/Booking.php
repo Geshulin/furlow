@@ -19,6 +19,6 @@ class Booking extends Model
 
     public function layanan()
     {
-        return $this->belongsTo(Layanan::class);
+        return $this->belongsTo(Layanan::class)->withTrashed();
     }
 }

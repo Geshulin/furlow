@@ -10,7 +10,7 @@ class Hewan extends Model
     use SoftDeletes;
 
     protected $table = 'hewan';
-    protected $fillable = ['user_id', 'nama', 'jenis', 'catatan_kesehatan', 'foto'];
+    protected $fillable = ['user_id', 'nama', 'jenis', 'ras', 'catatan_kesehatan', 'foto'];
 
     public function user()
     {

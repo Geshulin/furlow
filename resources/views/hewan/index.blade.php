@@ -7,7 +7,7 @@
         @if($h->foto)
             <img src="{{ asset('storage/'.$h->foto) }}" width="80">
         @endif
-        {{ $h->nama }} ({{ $h->jenis }})
+        {{ $h->nama }} ({{ $h->jenis }}{{ $h->ras ? ', '.$h->ras : '' }})
         <a href="{{ route('hewan.edit', $h) }}">Edit</a>
         <form action="{{ route('hewan.destroy', $h) }}" method="POST" style="display:inline">
             @csrf @method('DELETE')

@@ -6,6 +6,8 @@
     <input type="text" name="nama" value="{{ old('nama', $hewan->nama) }}">
     <label>Jenis</label>
     <input type="text" name="jenis" value="{{ old('jenis', $hewan->jenis) }}">
+    <label>Ras</label>
+    <input type="text" name="ras" value="{{ old('ras') }}">
     <label>Catatan Kesehatan</label>
     <textarea name="catatan_kesehatan">{{ old('catatan_kesehatan', $hewan->catatan_kesehatan) }}</textarea>
     <label>Foto</label>

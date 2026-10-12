@@ -24,6 +24,7 @@ class HewanController extends Controller
         $data = $request->validate([
             'nama' => 'required|string|max:255',
             'jenis' => 'required|string|max:255',
+            'ras' => 'nullable|string|max:255',
             'catatan_kesehatan' => 'nullable|string',
             'foto' => 'nullable|image|max:2048',
         ]);
@@ -52,6 +53,7 @@ class HewanController extends Controller
         $data = $request->validate([
             'nama' => 'required|string|max:255',
             'jenis' => 'required|string|max:255',
+            'ras' => 'nullable|string|max:255',
             'catatan_kesehatan' => 'nullable|string',
             'foto' => 'nullable|image|max:2048',
         ]);

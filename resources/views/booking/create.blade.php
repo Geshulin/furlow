@@ -24,6 +24,8 @@
 
     <label>Tanggal Masuk</label>
     <input type="date" name="tanggal_masuk" value="{{ old('tanggal_masuk') }}">
+    <label>Tanggal Keluar (untuk penitipan)</label>
+    <input type="date" name="tanggal_keluar" value="{{ old('tanggal_keluar') }}">
 
     <button type="submit">Ajukan</button>
 </form>

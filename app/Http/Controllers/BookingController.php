@@ -32,6 +32,7 @@ class BookingController extends Controller
             'hewan_id' => 'required|exists:hewan,id',
             'layanan_id' => 'required|exists:layanan,id',
             'tanggal_masuk' => 'required|date|after_or_equal:today',
+            'tanggal_keluar' => 'nullable|date|after_or_equal:tanggal_masuk',
         ]);
 
         // pastikan hewan_id beneran punya user yang login
