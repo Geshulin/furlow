@@ -7,6 +7,12 @@
         {{ $b->hewan->nama }} — {{ $b->layanan->nama_layanan }}
         — masuk: {{ $b->tanggal_masuk }}
         — status: {{ $b->status }}
+        @if($b->status === 'menunggu')
+    <form action="{{ route('booking.batal', $b) }}" method="POST" style="display:inline">
+        @csrf @method('PATCH')
+        <button type="submit">Batalkan</button>
+    </form>
+@endif
     </li>
 @endforeach
 </ul>

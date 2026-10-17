@@ -28,6 +28,7 @@ Route::middleware(['auth', 'role:pemilik_hewan'])->group(function () {
     Route::get('booking', [BookingController::class, 'indexPemilik'])->name('booking.index');
     Route::get('booking/create', [BookingController::class, 'create'])->name('booking.create');
     Route::post('booking', [BookingController::class, 'store'])->name('booking.store');
+    Route::patch('booking/{booking}/batal', [BookingController::class, 'batal'])->name('booking.batal');
 });
 
 require __DIR__.'/auth.php';

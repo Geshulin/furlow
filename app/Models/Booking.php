@@ -14,7 +14,7 @@ class Booking extends Model
 
     public function hewan()
     {
-        return $this->belongsTo(Hewan::class);
+        return $this->belongsTo(Hewan::class)->withTrashed();
     }
 
     public function layanan()

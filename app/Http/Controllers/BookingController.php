@@ -53,11 +53,37 @@ class BookingController extends Controller
     public function updateStatus(Request $request, Booking $booking)
     {
         $data = $request->validate([
-            'status' => 'required|in:menunggu,diterima,ditolak,diproses,selesai',
-            'alasan_penolakan' => 'nullable|string',
-            'estimasi_selesai' => 'nullable|date',
-        ]);
+        'status' => 'required|in:menunggu,diterima,ditolak,diproses,selesai',
+        'alasan_penolakan' => 'nullable|string',
+        'estimasi_selesai' => 'nullable|date',
+    ]);
+
+        $alur = [
+            'menunggu'   => ['diterima', 'ditolak'],
+            'diterima'   => ['diproses'],
+            'diproses'   => ['selesai'],
+            'ditolak'    => [],
+            'selesai'    => [],
+            'dibatalkan' => [],
+    ];
+
+        if ($data['status'] !== $booking->status
+            && ! in_array($data['status'], $alur[$booking->status] ?? [])) {
+            return redirect()->back()->withErrors([
+                'status' => 'Status tidak bisa diubah dari ' . $booking->status . ' ke ' . $data['status'] . '.',
+            ]);
+    }
+
         $booking->update($data);
         return redirect()->back()->with('success', 'Status booking diperbarui.');
+    }
+
+    public function batal(Booking $booking)
+    {
+        abort_if($booking->hewan->user_id !== Auth::id(), 403);
+        abort_if($booking->status !== 'menunggu', 403, 'Hanya booking yang masih menunggu yang bisa dibatalkan.');
+
+        $booking->update(['status' => 'dibatalkan']);
+        return redirect()->route('booking.index')->with('success', 'Booking dibatalkan.');
     }
 }

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('booking', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('hewan_id')->constrained('hewan')->onDelete('cascade');
+            $table->foreignId('hewan_id')->constrained('hewan');
             $table->foreignId('layanan_id')->constrained('layanan');
             $table->date('tanggal_masuk');
             $table->date('tanggal_keluar')->nullable();
-            $table->enum('status', ['menunggu', 'diterima', 'ditolak', 'diproses', 'selesai'])->default('menunggu');
+            $table->enum('status', ['menunggu', 'diterima', 'ditolak', 'diproses', 'selesai', 'dibatalkan'])->default('menunggu');
             $table->text('alasan_penolakan')->nullable();
             $table->dateTime('estimasi_selesai')->nullable();
             $table->string('foto_before')->nullable();
