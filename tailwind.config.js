@@ -11,10 +11,22 @@ export default {
 
     theme: {
         extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+            colors: {
+              furlow: {
+                ink: '#1F3A2E',
+                bg: '#F2F5EE',
+                accent: '#E8A33D',
+                'accent-ink': '#5C3B0E',
+                teal: '#6E9B8F',
+                blob: '#FBDFC0',
+                body: '#4B5A50',
             },
         },
+        fontFamily: {
+            sans: ['Work Sans', ...defaultTheme.fontFamily.sans],
+            display: ['Fraunces', 'serif'],
+        },
+    },
     },
 
     plugins: [forms],
