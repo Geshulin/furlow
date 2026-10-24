@@ -21,9 +21,10 @@ class BookingController extends Controller
 
     public function create()
     {
-        $hewanSaya = Hewan::where('user_id', Auth::id())->get();
-        $layanan = Layanan::all();
-        return view('booking.create', compact('hewanSaya', 'layanan'));
+    return view('booking.create', [
+        'hewan'   => Hewan::where('user_id', Auth::id())->get(),
+        'layanan' => Layanan::all(),
+    ]);
     }
 
     public function store(Request $request)
@@ -46,8 +47,8 @@ class BookingController extends Controller
 
     public function indexAdmin()
     {
-        $semuaBooking = Booking::with(['hewan', 'layanan'])->latest()->get();
-        return view('booking.admin-index', compact('semuaBooking'));
+    $semuaBooking = Booking::with(['hewan.user', 'layanan'])->latest()->get();
+    return view('booking.admin-index', compact('semuaBooking'));
     }
 
     public function updateStatus(Request $request, Booking $booking)

@@ -36,9 +36,13 @@ class HewanController extends Controller
         return redirect()->route('hewan.index')->with('success', 'Hewan ditambahkan.');
     }
 
-    public function show(string $id)
+    public function show(Hewan $hewan)
     {
-        //
+    abort_if($hewan->user_id !== Auth::id(), 403);
+
+    $bookings = $hewan->booking()->with('layanan')->latest()->get();
+
+    return view('hewan.show', compact('hewan', 'bookings'));
     }
 
     public function edit(Hewan $hewan)

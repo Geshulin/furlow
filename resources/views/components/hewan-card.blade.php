@@ -1,14 +1,26 @@
 @props(['hewan'])
 
-<a href="{{ route('hewan.show', $hewan) }}"
-   class="flex items-center gap-4 rounded-2xl border border-furlow-ink/15 bg-white p-4 transition hover:-translate-y-0.5 hover:border-furlow-teal">
-    @if ($hewan->foto)
-        <img src="{{ asset('storage/' . $hewan->foto) }}" alt="Foto {{ $hewan->nama }}" class="h-14 w-14 rounded-xl object-cover">
-    @else
-        <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-furlow-blob text-xl">🐾</div>
-    @endif
-    <div>
-        <p class="font-display text-lg font-semibold text-furlow-ink">{{ $hewan->nama }}</p>
-        <p class="text-sm">{{ $hewan->jenis }}@if ($hewan->ras) · {{ $hewan->ras }}@endif</p>
+<div class="rounded-2xl border border-furlow-ink/15 bg-white p-4 transition hover:border-furlow-teal">
+    <a href="{{ route('hewan.show', $hewan) }}" class="flex items-center gap-4">
+        @if ($hewan->foto)
+            <img src="{{ asset('storage/' . $hewan->foto) }}" alt="Foto {{ $hewan->nama }}" class="h-14 w-14 rounded-xl object-cover">
+        @else
+            <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-furlow-blob text-xl">🐾</div>
+        @endif
+        <div>
+            <p class="font-display text-lg font-semibold text-furlow-ink">{{ $hewan->nama }}</p>
+            <p class="text-sm">{{ $hewan->jenis }}@if ($hewan->ras) · {{ $hewan->ras }}@endif</p>
+        </div>
+    </a>
+
+    <div class="mt-3 flex items-center gap-3 border-t border-furlow-ink/10 pt-3 text-sm">
+        <a href="{{ route('hewan.show', $hewan) }}" class="underline">Detail</a>
+        <a href="{{ route('hewan.edit', $hewan) }}" class="underline">Edit</a>
+        <form method="POST" action="{{ route('hewan.destroy', $hewan) }}"
+              onsubmit="return confirm('Hapus hewan ini?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="text-red-700 underline">Hapus</button>
+        </form>
     </div>
-</a>
+</div>
