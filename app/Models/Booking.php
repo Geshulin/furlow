@@ -12,6 +12,12 @@ class Booking extends Model
         'alasan_penolakan', 'estimasi_selesai', 'foto_before', 'foto_after',
     ];
 
+    protected $casts = [
+    'tanggal_masuk' => 'date',
+    'tanggal_keluar' => 'date',
+    'estimasi_selesai' => 'datetime',
+    ];
+
     public function hewan()
     {
         return $this->belongsTo(Hewan::class)->withTrashed();
