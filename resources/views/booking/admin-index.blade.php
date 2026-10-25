@@ -86,15 +86,39 @@
                                             class="rounded-md bg-furlow-ink px-3 py-1.5 text-xs text-white">Proses</button>
                                 </form>
 
-                            @elseif ($b->status === 'diproses')
+                           @elseif ($b->status === 'diproses')
+                            <div class="min-w-56 space-y-3">
+                                <form method="POST" action="{{ route('booking.uploadFoto', $b) }}" enctype="multipart/form-data"
+                                    class="space-y-3 rounded-xl bg-furlow-bg p-4">
+                                    @csrf
+                                    <div>
+                                        <label class="text-sm font-semibold text-furlow-ink">Foto sebelum</label>
+                                        @if ($b->foto_before)
+                                            <img src="{{ asset('storage/' . $b->foto_before) }}" alt="Foto sebelum"
+                                                class="mt-1 h-16 w-16 rounded-lg object-cover">
+                                        @endif
+                                        <input type="file" name="foto_before" accept="image/*" class="mt-1 block w-full text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="text-sm font-semibold text-furlow-ink">Foto sesudah</label>
+                                        @if ($b->foto_after)
+                                            <img src="{{ asset('storage/' . $b->foto_after) }}" alt="Foto sesudah"
+                                                class="mt-1 h-16 w-16 rounded-lg object-cover">
+                                        @endif
+                                        <input type="file" name="foto_after" accept="image/*" class="mt-1 block w-full text-sm">
+                                    </div>
+                                    <x-primary-button>Simpan foto</x-primary-button>
+                                </form>
+
                                 <form method="POST" action="{{ route('booking.updateStatus', $b) }}"
-                                      onsubmit="return confirm('Tandai selesai? Setelah ini status terkunci.')">
+                                    onsubmit="return confirm('Tandai selesai? Setelah ini status terkunci dan foto tidak bisa diubah.')">
                                     @csrf
                                     @method('PATCH')
                                     <input type="hidden" name="status" value="selesai">
                                     <button type="submit"
                                             class="rounded-md bg-furlow-ink px-3 py-1.5 text-xs text-white">Selesai</button>
                                 </form>
+                            </div>
 
                             @else
                                 <span class="text-xs text-gray-500">Final</span>

@@ -7,6 +7,7 @@ use App\Models\Hewan;
 use App\Models\Layanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BookingController extends Controller
 {
@@ -86,5 +87,29 @@ class BookingController extends Controller
 
         $booking->update(['status' => 'dibatalkan']);
         return redirect()->route('booking.index')->with('success', 'Booking dibatalkan.');
+    }
+
+    public function uploadFoto(Request $request, Booking $booking)
+    {
+    if ($booking->status !== 'diproses') {
+        return back()->withErrors(['foto' => 'Foto hanya bisa diunggah saat booking berstatus diproses.']);
+    }
+
+    $request->validate([
+        'foto_before' => 'nullable|image|max:4096',
+        'foto_after'  => 'nullable|image|max:4096',
+    ]);
+
+    foreach (['foto_before', 'foto_after'] as $kolom) {
+        if ($request->hasFile($kolom)) {
+            if ($booking->$kolom) {
+                Storage::disk('public')->delete($booking->$kolom); // hapus foto lama
+            }
+            $booking->$kolom = $request->file($kolom)->store('booking', 'public');
+        }
+    }
+    $booking->save();
+
+    return back()->with('success', 'Foto disimpan.');
     }
 }

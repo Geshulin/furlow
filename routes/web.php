@@ -21,6 +21,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('layanan', LayananController::class);
     Route::get('admin/booking', [BookingController::class, 'indexAdmin'])->name('booking.admin.index');
     Route::patch('admin/booking/{booking}', [BookingController::class, 'updateStatus'])->name('booking.updateStatus');
+    Route::post('admin/booking/{booking}/foto', [BookingController::class, 'uploadFoto'])->name('booking.uploadFoto');
 });
 
 Route::middleware(['auth', 'role:pemilik_hewan'])->group(function () {
