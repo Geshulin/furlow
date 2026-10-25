@@ -126,6 +126,62 @@
     90%, 100% { opacity: 0; transform: translateY(0) rotate(0deg); }
 }
 
+/* ===== Tombol: efek hover yang dipakai ulang ===== */
+@layer components {
+    .btn-hover {
+        @apply transition duration-200 hover:-translate-y-0.5 hover:shadow-lg active:scale-95 motion-reduce:transition-none motion-reduce:hover:transform-none;
+    }
+}
+
+/* ===== Loader: tapak berjalan melingkar ===== */
+.paw-loader { --r: 28px; position: relative; width: 80px; height: 80px; }
+.paw-loader svg {
+    position: absolute;
+    left: calc(50% - 9px);
+    top: calc(50% - 9px);
+    width: 18px;
+    height: 18px;
+    opacity: 0;
+    /* titik di lingkaran, lalu hadap searah jalan, dimiringkan kiri/kanan bergantian */
+    transform: rotate(calc(var(--i) * 36deg)) translateY(calc(var(--r) * -1)) rotate(calc(90deg + var(--t)));
+    animation: paw-step 2s linear infinite;
+    animation-delay: calc(var(--i) * 0.2s);
+}
+@keyframes paw-step {
+    0%   { opacity: 0; }
+    6%   { opacity: 1; }
+    70%  { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* ===== Muncul saat di-scroll (landing) ===== */
+.reveal-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .7s ease, transform .7s ease;
+}
+.reveal-scroll.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .paw-loader svg { animation: none; opacity: .6; }
+    .reveal-scroll { opacity: 1; transform: none; transition: none; }
+}
+
+html { scroll-behavior: smooth; }
+
+.reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: reveal .7s ease forwards;
+    animation-delay: var(--d, 0s);
+}
+@keyframes reveal { to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { animation: none; opacity: 1; transform: none; }
+}
+
 /* Hormati pengguna yang mematikan animasi */
 @media (prefers-reduced-motion: reduce) {
     .blob { animation: none; }

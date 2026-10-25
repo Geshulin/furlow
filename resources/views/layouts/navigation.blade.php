@@ -1,8 +1,8 @@
 @php
     $isAdmin = Auth::user()->role === 'admin';
     $menu = $isAdmin
-        ? [['Beranda', 'dashboard'], ['Booking', 'booking.admin.index'], ['Layanan', 'layanan.index']]
-        : [['Beranda', 'dashboard'], ['Hewan', 'hewan.index'], ['Booking', 'booking.index']];
+        ? [['Beranda', 'dashboard', 'home'], ['Booking', 'booking.admin.index', 'booking'], ['Layanan', 'layanan.index', 'layanan']]
+        : [['Beranda', 'dashboard', 'home'], ['Hewan', 'hewan.index', 'hewan'], ['Booking', 'booking.index', 'booking']];
 @endphp
 
 <div class="flex h-full flex-col">
@@ -15,22 +15,28 @@
     </span>
 
     <nav class="space-y-1">
-        @foreach ($menu as [$label, $route])
+        @foreach ($menu as [$label, $route, $icon])
             <a href="{{ route($route) }}"
-               class="block rounded-xl px-4 py-2.5 text-sm font-medium transition
+               class="flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition
                       {{ request()->routeIs($route) ? 'bg-furlow-blob text-furlow-accent-ink font-semibold' : 'hover:bg-furlow-bg' }}">
+                <x-icon :name="$icon" />
                 {{ $label }}
             </a>
         @endforeach
     </nav>
 
     <div class="mt-auto space-y-1 pt-6">
-        <a href="{{ route('profile.edit') }}" class="block rounded-xl px-4 py-2.5 text-sm hover:bg-furlow-bg">Profil</a>
+        <a href="{{ route('profile.edit') }}"
+           class="flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm transition hover:bg-furlow-bg">
+            <x-icon name="profil" />
+            Profil
+        </a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button class="w-full rounded-xl px-4 py-2.5 text-left text-sm hover:bg-furlow-bg">Keluar</button>
+            <button class="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-left text-sm transition hover:bg-furlow-bg">
+                <x-icon name="keluar" />
+                Keluar
+            </button>
         </form>
     </div>
 </div>
-```
-

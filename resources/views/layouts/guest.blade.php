@@ -22,6 +22,8 @@
                 <span class="font-display text-3xl font-bold text-furlow-ink">Furlow</span>
             </a>
             <div class="w-full max-w-md rounded-2xl border border-furlow-ink/15 bg-white px-6 py-8">
+
+                <a href="/" class="mb-4 inline-block text-sm font-semibold text-furlow-ink">← Kembali ke beranda</a>
                 {{ $slot }}
             </div>
         </div>

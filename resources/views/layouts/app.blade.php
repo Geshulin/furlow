@@ -27,20 +27,40 @@
     @php
         $isAdminTab = Auth::user()->role === 'admin';
         $tabs = $isAdminTab
-            ? [['Beranda', 'dashboard'], ['Booking', 'booking.admin.index'], ['Layanan', 'layanan.index']]
-            : [['Beranda', 'dashboard'], ['Hewan', 'hewan.index'], ['Booking', 'booking.index']];
+            ? [['Beranda', 'dashboard', 'home'], ['Booking', 'booking.admin.index', 'booking'], ['Layanan', 'layanan.index', 'layanan']]
+            : [['Beranda', 'dashboard', 'home'], ['Hewan', 'hewan.index', 'hewan'], ['Booking', 'booking.index', 'booking']];
     @endphp
     <nav class="fixed inset-x-0 bottom-0 z-30 flex justify-around border-t border-furlow-ink/15 bg-white py-3 md:hidden">
-        @foreach ($tabs as [$label, $route])
+        @foreach ($tabs as [$label, $route, $icon])
             <a href="{{ route($route) }}"
-               class="text-xs font-medium {{ request()->routeIs($route) ? 'font-bold text-furlow-ink' : '' }}">
+               class="flex flex-col items-center gap-1 text-xs font-medium {{ request()->routeIs($route) ? 'font-bold text-furlow-ink' : '' }}">
+                <x-icon :name="$icon" />
                 {{ $label }}
             </a>
         @endforeach
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button class="text-xs font-medium">Keluar</button>
+            <button class="flex flex-col items-center gap-1 text-xs font-medium">
+                <x-icon name="keluar" />
+                Keluar
+            </button>
         </form>
     </nav>
+
+    {{-- WhatsApp CS --}}
+    <a href="https://wa.me/{{ config('furlow.wa') }}?text={{ urlencode('Halo Furlow, saya mau tanya soal layanan.') }}"
+       target="_blank" rel="noopener"
+       class="btn-hover fixed bottom-24 right-5 z-40 rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-white shadow-lg md:bottom-6">
+        Chat WhatsApp
+    </a>
+
+    {{-- Loader tapak: muncul saat form dikirim --}}
+    <div x-data="{ loading: false }"
+         @submit.window="if (!$event.defaultPrevented) loading = true"
+         @pageshow.window="loading = false"
+         x-show="loading" x-cloak
+         class="fixed inset-0 z-50 flex items-center justify-center bg-furlow-bg/80">
+        <x-paw-loader />
+    </div>
 </body>
 </html>
