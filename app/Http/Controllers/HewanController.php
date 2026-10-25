@@ -40,9 +40,9 @@ class HewanController extends Controller
     {
     abort_if($hewan->user_id !== Auth::id(), 403);
 
-    $bookings = $hewan->booking()->with('layanan')->latest()->get();
+    $riwayat = $hewan->booking()->with('layanan')->latest()->take(5)->get();
 
-    return view('hewan.show', compact('hewan', 'bookings'));
+    return view('hewan.show', compact('hewan', 'riwayat'));
     }
 
     public function edit(Hewan $hewan)
