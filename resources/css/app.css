@@ -3,3 +3,132 @@
 @tailwind utilities;
 
 [x-cloak] { display: none !important; }
+
+/* Blob kuning: menyembul dari tepi kanan, tidak terpotong atas/bawah */
+.blob {
+    position: absolute;
+    top: 50px;
+    right: -110px;
+    width: 380px;
+    height: 380px;
+    background: #FBDFC0;
+    opacity: 0.85;
+    pointer-events: none;
+    border-radius: 44% 56% 62% 38% / 41% 44% 56% 59%;
+    animation: drift 6s ease-in-out infinite;
+}
+@keyframes drift {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        border-radius: 44% 56% 62% 38% / 41% 44% 56% 59%;
+    }
+    33% {
+        transform: translate(-30px, 28px) rotate(12deg) scale(1.08);
+        border-radius: 58% 42% 40% 60% / 55% 38% 62% 45%;
+    }
+    66% {
+        transform: translate(14px, 44px) rotate(-8deg) scale(0.95);
+        border-radius: 40% 60% 55% 45% / 60% 50% 50% 40%;
+    }
+}
+
+/* Blob teal: menyembul dari tepi kiri, bawahnya melengkung utuh */
+.blob-2 {
+    position: absolute;
+    bottom: 90px;
+    left: -100px;
+    width: 300px;
+    height: 300px;
+    background: #6E9B8F;
+    opacity: 0.25;
+    pointer-events: none;
+    border-radius: 58% 42% 40% 60% / 55% 38% 62% 45%;
+    animation: drift 8s ease-in-out infinite reverse;
+}
+
+/* Anjing: ekor goyang cepat, kepala menyundul manja */
+.dog-tail {
+    transform-origin: 34px 100px;
+    animation: wag 0.45s ease-in-out infinite alternate;
+}
+@keyframes wag {
+    from { transform: rotate(-16deg); }
+    to   { transform: rotate(24deg); }
+}
+.dog-head {
+    transform-origin: 80px 96px;
+    animation: nuzzle 2.6s ease-in-out infinite;
+}
+@keyframes nuzzle {
+    0%, 100% { transform: rotate(4deg); }
+    50%      { transform: rotate(16deg); }
+}
+
+/* Hati melayang dari anjing */
+.heart {
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    animation: float-heart 3s ease-in infinite;
+}
+@keyframes float-heart {
+    0%   { opacity: 0; transform: translateY(0) scale(0.5); }
+    20%  { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-26px) scale(1.1); }
+}
+
+/* Kucing: ekor kibas kesal, telinga berkedut, kepala membuang muka */
+.cat-tail {
+    transform-origin: 194px 98px;
+    animation: flick 2.8s ease-in-out infinite;
+}
+@keyframes flick {
+    0%, 55%, 100% { transform: rotate(0deg); }
+    65%           { transform: rotate(18deg); }
+    75%           { transform: rotate(-4deg); }
+    85%           { transform: rotate(14deg); }
+}
+.cat-ear {
+    transform-box: fill-box;
+    transform-origin: bottom center;
+    animation: twitch 3.6s infinite;
+}
+@keyframes twitch {
+    0%, 88%, 100% { transform: rotate(0deg); }
+    92%           { transform: rotate(-10deg); }
+    96%           { transform: rotate(4deg); }
+}
+.cat-head {
+    transform-origin: 172px 68px;
+    animation: ignore 6s ease-in-out infinite;
+}
+@keyframes ignore {
+    0%, 100% { transform: rotate(4deg); }
+    50%      { transform: rotate(10deg); }
+}
+
+/* Jejak tapak muncul berurutan */
+.paw-trail svg {
+    width: 22px;
+    height: 22px;
+    opacity: 0;
+    animation: paw-walk 3.5s ease-in-out infinite;
+}
+.paw-trail svg:nth-child(1) { animation-delay: .1s; }
+.paw-trail svg:nth-child(2) { animation-delay: .4s; }
+.paw-trail svg:nth-child(3) { animation-delay: .7s; }
+.paw-trail svg:nth-child(4) { animation-delay: 1s; }
+.paw-trail svg:nth-child(5) { animation-delay: 1.3s; }
+
+@keyframes paw-walk {
+    0%        { opacity: 0; transform: translateY(6px) rotate(-8deg); }
+    15%, 70%  { opacity: 1; transform: translateY(0) rotate(0deg); }
+    90%, 100% { opacity: 0; transform: translateY(0) rotate(0deg); }
+}
+
+/* Hormati pengguna yang mematikan animasi */
+@media (prefers-reduced-motion: reduce) {
+    .blob { animation: none; }
+    .paw-trail svg { animation: none; opacity: 1; }
+    .blob-2, .dog-tail, .dog-head, .dog-paw, .heart, .cat-tail, .cat-ear, .cat-head { animation: none; }
+}

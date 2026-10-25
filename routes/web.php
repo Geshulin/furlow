@@ -5,14 +5,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\HewanController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\DashboardController;
+use App\Models\Layanan;
 
 Route::get('/', function () {
-    return view('welcome');
+    $layanan = Layanan::all(); // layanan yang sudah di-soft-delete otomatis tidak ikut
+    return view('welcome', compact('layanan'));
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('dashboard');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
