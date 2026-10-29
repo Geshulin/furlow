@@ -17,10 +17,14 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+// Profil: semua pengguna yang login (admin dan pemilik hewan)
+Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('layanan', LayananController::class);
     Route::get('admin/booking', [BookingController::class, 'indexAdmin'])->name('booking.admin.index');
     Route::patch('admin/booking/{booking}', [BookingController::class, 'updateStatus'])->name('booking.updateStatus');
