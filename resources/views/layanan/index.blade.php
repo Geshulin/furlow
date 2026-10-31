@@ -19,8 +19,12 @@
             <tbody>
                 @forelse ($layanan as $l)
                     <tr class="border-b last:border-0">
-                        <td class="p-4">{{ $l->nama_layanan }}</td>
-                        <td class="p-4">Rp {{ number_format($l->harga, 0, ',', '.') }}</td>
+                        <td class="p-4">{{ $l->nama_layanan }}
+                            @if ($l->butuh_tanggal_keluar)
+                                <span class="ml-2 rounded-full bg-furlow-blob px-2 py-0.5 text-xs font-semibold text-furlow-accent-ink">Penitipan</span>
+                            @endif
+                        </td>
+                        <td class="p-4">{{ rupiah($l->harga) }}</td>
                         <td class="flex gap-3 p-4">
                             <a href="{{ route('layanan.edit', $l) }}" class="underline">Edit</a>
                             <form method="POST" action="{{ route('layanan.destroy', $l) }}"

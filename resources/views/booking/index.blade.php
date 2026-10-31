@@ -32,8 +32,14 @@
                 </div>
 
                 <p class="mt-3 text-sm">
-                    {{ $b->tanggal_masuk->translatedFormat('d F Y') }}
+                    <x-rentang-tanggal :booking="$b" />
                     @if ($b->tanggal_keluar) – {{ $b->tanggal_keluar->translatedFormat('d F Y') }} @endif
+                </p>
+
+                <p class="mt-2 text-sm">
+                Estimasi total:
+                    <span class="font-semibold text-furlow-ink">{{ rupiah($b->estimasiTotal()) }}</span>
+                    <span class="block text-xs">Harga akhir dikonfirmasi petshop sesuai ukuran dan kondisi bulu hewan.</span>
                 </p>
 
                 @if ($b->status === 'ditolak' && $b->alasan_penolakan)

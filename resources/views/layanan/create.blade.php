@@ -15,7 +15,7 @@
         </div>
 
         <div>
-            <x-input-label for="harga" value="Harga (per hari / per layanan)" />
+            <x-input-label for="harga" value="Harga mulai dari (Rp)" />
             <x-text-input id="harga" type="number" name="harga" class="mt-1 block w-full"
                           :value="old('harga')" required />
             <x-input-error :messages="$errors->get('harga')" class="mt-1" />

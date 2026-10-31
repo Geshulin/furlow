@@ -30,13 +30,11 @@ class LayananController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nama_layanan' => 'required|string|max:255',
-            'harga' =>'required|numeric|min:0',
-            'deskripsi' => 'nullable|string',
-        ]);
-        Layanan::create($data);
-        return redirect()->route('layanan.index')->with('success', 'Layanan ditambahkan.'); 
+    $data = $request->validate($this->aturan());
+    $data['butuh_tanggal_keluar'] = $request->boolean('butuh_tanggal_keluar');
+    Layanan::create($data);
+
+    return redirect()->route('layanan.index')->with('success', 'Layanan ditambahkan.');
     }
 
     /**
@@ -60,13 +58,11 @@ class LayananController extends Controller
      */
     public function update(Request $request, Layanan $layanan)
     {
-        $data = $request->validate([
-            'nama_layanan' => 'required|string|max:255',
-            'harga' => 'required|numeric|min:0',
-            'deskripsi' => 'nullable|string',
-        ]);
-        $layanan->update($data);
-        return redirect()->route('layanan.index')->with('success', 'Layanan diperbarui.');
+    $data = $request->validate($this->aturan());
+    $data['butuh_tanggal_keluar'] = $request->boolean('butuh_tanggal_keluar');
+    $layanan->update($data);
+
+    return redirect()->route('layanan.index')->with('success', 'Layanan diperbarui.');
     }
 
     /**
@@ -76,5 +72,15 @@ class LayananController extends Controller
     {
         $layanan->delete();
         return redirect()->route('layanan.index')->with('success', 'layanan dihapus');
+    }
+
+    private function aturan(): array
+    {
+    return [
+        'nama_layanan' => 'required|string|max:255',
+        'harga' => 'required|numeric|min:0',
+        'deskripsi' => 'nullable|string',
+        'butuh_tanggal_keluar' => 'nullable|boolean',
+    ];
     }
 }

@@ -16,7 +16,7 @@
         </div>
 
         <div>
-            <x-input-label for="harga" value="Harga (per hari / per layanan)" />
+            <x-input-label for="harga" value="Harga mulai dari (Rp)" />
             <x-text-input id="harga" type="number" name="harga" class="mt-1 block w-full"
                           :value="old('harga', $layanan->harga)" required />
             <x-input-error :messages="$errors->get('harga')" class="mt-1" />
@@ -28,6 +28,13 @@
                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">{{ old('deskripsi', $layanan->deskripsi) }}</textarea>
             <x-input-error :messages="$errors->get('deskripsi')" class="mt-1" />
         </div>
+
+        <label class="mt-4 flex items-center gap-2 text-sm">
+    <input type="checkbox" name="butuh_tanggal_keluar" value="1"
+           @checked(old('butuh_tanggal_keluar', $layanan->butuh_tanggal_keluar ?? false))
+           class="rounded border-furlow-ink/30 text-furlow-teal focus:ring-furlow-teal">
+            Layanan ini penitipan (pemilik wajib mengisi tanggal keluar)
+    </label>
 
         <div class="flex items-center gap-3">
             <x-primary-button>Simpan Perubahan</x-primary-button>

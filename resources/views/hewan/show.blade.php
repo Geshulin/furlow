@@ -25,7 +25,7 @@
                     </p>
                     <x-status-badge :status="$r->status" />
                 </div>
-                <p class="mt-1 text-sm">{{ $r->tanggal_masuk->translatedFormat('d F Y') }}</p>
+                <p class="mt-1 text-sm"><x-rentang-tanggal :booking="$r" /></p>
 
                 @if ($r->foto_before || $r->foto_after)
                     <div class="mt-4 grid grid-cols-2 gap-3">

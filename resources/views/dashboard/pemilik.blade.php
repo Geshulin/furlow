@@ -11,7 +11,7 @@
                     <p class="font-display text-lg font-semibold text-furlow-ink">{{ $b->hewan->nama }}</p>
                     <x-status-badge :status="$b->status" />
                 </div>
-                <p class="mt-1 text-sm">{{ $b->layanan->nama_layanan }} · {{ $b->tanggal_masuk->translatedFormat('d F Y') }}</p>
+                <p class="mt-1 text-sm">{{ $b->layanan->nama_layanan }} · <x-rentang-tanggal :booking="$b" /></p>
             </div>
         @empty
             <p>Tidak ada booking aktif.</p>

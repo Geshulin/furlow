@@ -28,7 +28,7 @@
                 <option value="">-- Pilih layanan --</option>
                 @foreach ($layanan as $l)
                     <option value="{{ $l->id }}" @selected(old('layanan_id') == $l->id)>
-                        {{ $l->nama_layanan }} - Rp {{ number_format($l->harga, 0, ',', '.') }}
+                        {{ $l->nama_layanan }} - {{ rupiah($l->harga) }}
                     </option>
                 @endforeach
             </select>

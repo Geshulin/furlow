@@ -121,7 +121,7 @@
                             <p class="mt-1 text-sm">{{ $l->deskripsi }}</p>
                         </div>
                         <p class="font-display text-lg font-semibold text-furlow-ink">
-                            <span class="text-sm font-normal">Mulai dari</span> Rp {{ number_format($l->harga, 0, ',', '.') }}
+                            <span class="text-sm font-normal">Mulai dari</span> {{ rupiah($l->harga) }}
                         </p>
                     </div>
                 @empty
@@ -147,7 +147,7 @@
 
     <footer class="border-t border-furlow-ink/15 py-8 text-center text-sm">© 2026 Furlow. Proyek UKOM.</footer>
 
-    <a href="https://wa.me/{{ config('furlow.wa') }}?text={{ urlencode('Halo Furlow, saya mau tanya soal layanan.') }}"
+    <a href="https://wa.me/{{ config('furlow.wa') }}?text={{ urlencode('Halo min Furlow, aku mau nanya soal layanan nichh') }}"
        target="_blank" rel="noopener"
        class="btn-hover fixed bottom-6 right-5 z-40 rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-white shadow-lg">
         Chat WhatsApp

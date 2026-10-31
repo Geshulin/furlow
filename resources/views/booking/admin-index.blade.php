@@ -24,6 +24,7 @@
                     <th class="p-4">Tanggal</th>
                     <th class="p-4">Status</th>
                     <th class="p-4">Aksi</th>
+                    <th class="p-4">Estimasi</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,7 +39,7 @@
                             {{ $b->layanan->nama_layanan }}
                             @if ($b->layanan->trashed()) <span class="text-xs text-gray-500">(dihapus)</span> @endif
                         </td>
-                        <td class="p-4">{{ $b->tanggal_masuk }} s/d {{ $b->tanggal_keluar ?? '-' }}</td>
+                        <td class="p-4"><x-rentang-tanggal :booking="$b" /></td>
                         <td class="p-4">
                             <x-status-badge :status="$b->status" />
                             @if ($b->status === 'ditolak' && $b->alasan_penolakan)
@@ -131,9 +132,11 @@
                                 <span class="text-xs text-gray-500">Final</span>
                             @endif
                         </td>
+                        
+                        <td class="p-4">{{ rupiah($b->estimasiTotal()) }}</td>
                     </tr>
                 @empty
-                    <tr><td colspan="6" class="p-4 text-center">Belum ada booking.</td></tr>
+                    <tr><td colspan="7" class="p-4 text-center">Belum ada booking.</td></tr>
                 @endforelse
             </tbody>
         </table>
