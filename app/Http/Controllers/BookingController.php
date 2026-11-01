@@ -8,6 +8,7 @@ use App\Models\Layanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class BookingController extends Controller
 {
@@ -30,20 +31,44 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'hewan_id' => 'required|exists:hewan,id',
-            'layanan_id' => 'required|exists:layanan,id',
-            'tanggal_masuk' => 'required|date|after_or_equal:today',
-            'tanggal_keluar' => 'nullable|date|after_or_equal:tanggal_masuk',
-        ]);
+    // find() otomatis mengabaikan layanan yang sudah di-soft-delete
+    $layanan = Layanan::find($request->layanan_id);
 
-        // pastikan hewan_id beneran punya user yang login
-        Hewan::where('id', $data['hewan_id'])
-            ->where('user_id', Auth::id())
-            ->firstOrFail();
+    $data = $request->validate([
+        'hewan_id' => [
+            'required',
+            Rule::exists('hewan', 'id')
+                ->where('user_id', Auth::id())
+                ->whereNull('deleted_at'),
+        ],
+        'layanan_id' => [
+            'required',
+            Rule::exists('layanan', 'id')->whereNull('deleted_at'),
+        ],
+        'tanggal_masuk' => ['required', 'date', 'after_or_equal:today'],
+        'tanggal_keluar' => [
+            Rule::requiredIf($layanan?->butuh_tanggal_keluar ?? false),
+            'nullable',
+            'date',
+            'after_or_equal:tanggal_masuk',
+        ],
+    ], [
+        'hewan_id.required' => 'Pilih hewan terlebih dahulu.',
+        'hewan_id.exists' => 'Hewan tidak ditemukan atau sudah dihapus.',
+        'layanan_id.required' => 'Pilih layanan terlebih dahulu.',
+        'layanan_id.exists' => 'Layanan ini sudah tidak tersedia.',
+        'tanggal_masuk.required' => 'Tanggal masuk wajib diisi.',
+        'tanggal_masuk.date' => 'Tanggal masuk tidak valid.',
+        'tanggal_masuk.after_or_equal' => 'Tanggal masuk tidak boleh sebelum hari ini.',
+        'tanggal_keluar.required' => 'Tanggal keluar wajib diisi untuk layanan penitipan.',
+        'tanggal_keluar.date' => 'Tanggal keluar tidak valid.',
+        'tanggal_keluar.after_or_equal' => 'Tanggal keluar tidak boleh sebelum tanggal masuk.',
+    ]);
 
-        Booking::create($data); // status otomatis 'menunggu' (default dari migration)
-        return redirect()->route('booking.index')->with('success', 'Booking diajukan, menunggu konfirmasi admin.');
+    Booking::create($data); // status otomatis 'menunggu'
+
+    return redirect()->route('booking.index')
+        ->with('success', 'Booking diajukan, menunggu konfirmasi petshop.');
     }
 
     public function indexAdmin()
@@ -54,30 +79,53 @@ class BookingController extends Controller
 
     public function updateStatus(Request $request, Booking $booking)
     {
-        $data = $request->validate([
-        'status' => 'required|in:menunggu,diterima,ditolak,diproses,selesai',
-        'alasan_penolakan' => 'nullable|string',
-        'estimasi_selesai' => 'nullable|date',
-    ]);
-
-        $alur = [
-            'menunggu'   => ['diterima', 'ditolak'],
-            'diterima'   => ['diproses'],
-            'diproses'   => ['selesai'],
-            'ditolak'    => [],
-            'selesai'    => [],
-            'dibatalkan' => [],
+    // Alur yang diizinkan. Status final (ditolak, selesai, dibatalkan) tidak punya tujuan.
+    $alur = [
+        'menunggu' => ['diterima', 'ditolak'],
+        'diterima' => ['diproses'],
+        'diproses' => ['selesai'],
     ];
 
-        if ($data['status'] !== $booking->status
-            && ! in_array($data['status'], $alur[$booking->status] ?? [])) {
-            return redirect()->back()->withErrors([
-                'status' => 'Status tidak bisa diubah dari ' . $booking->status . ' ke ' . $data['status'] . '.',
-            ]);
+    $request->validate([
+        'status' => ['required', Rule::in(['diterima', 'ditolak', 'diproses', 'selesai'])],
+        'alasan_penolakan' => ['required_if:status,ditolak', 'nullable', 'string', 'max:500'],
+        'estimasi_selesai' => ['nullable', 'date', 'after_or_equal:' . $booking->tanggal_masuk->toDateString()],
+    ], [
+        'status.required' => 'Status tujuan wajib dipilih.',
+        'status.in' => 'Status tidak valid.',
+        'alasan_penolakan.required_if' => 'Alasan penolakan wajib diisi saat menolak booking.',
+        'alasan_penolakan.max' => 'Alasan penolakan maksimal 500 karakter.',
+        'estimasi_selesai.date' => 'Estimasi selesai tidak valid.',
+        'estimasi_selesai.after_or_equal' => 'Estimasi selesai tidak boleh sebelum tanggal masuk.',
+    ]);
+
+    $tujuan = $request->status;
+
+    if (! in_array($tujuan, $alur[$booking->status] ?? [], true)) {
+        return back()->withErrors([
+            'status' => "Booking berstatus {$booking->status} tidak bisa diubah ke {$tujuan}.",
+        ]);
     }
 
-        $booking->update($data);
-        return redirect()->back()->with('success', 'Status booking diperbarui.');
+    // Diproses baru boleh mulai hari H. Diterima boleh kapan saja.
+    if ($tujuan === 'diproses' && $booking->tanggal_masuk->gt(today())) {
+        return back()->withErrors([
+            'status' => 'Booking baru bisa diproses mulai ' . tanggal($booking->tanggal_masuk) . '.',
+        ]);
+    }
+
+    $data = ['status' => $tujuan];
+
+    if ($tujuan === 'ditolak') {
+        $data['alasan_penolakan'] = $request->alasan_penolakan;
+    }
+    if ($tujuan === 'diproses') {
+        $data['estimasi_selesai'] = $request->estimasi_selesai;
+    }
+
+    $booking->update($data);
+
+    return back()->with('success', 'Status booking diperbarui.');
     }
 
     public function batal(Booking $booking)

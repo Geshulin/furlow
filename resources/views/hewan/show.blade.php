@@ -7,10 +7,23 @@
         </div>
     </x-slot>
 
-    <p class="text-sm">{{ $hewan->jenis }}@if ($hewan->ras) · {{ $hewan->ras }}@endif</p>
-    @if ($hewan->catatan_kesehatan)
-        <p class="mt-2 text-sm"><span class="font-semibold text-furlow-ink">Catatan kesehatan:</span> {{ $hewan->catatan_kesehatan }}</p>
-    @endif
+    <div class="flex flex-wrap items-start gap-5">
+        @if ($hewan->foto)
+            <img src="{{ asset('storage/' . $hewan->foto) }}" alt="Foto {{ $hewan->nama }}"
+                 class="h-40 w-40 rounded-2xl object-cover">
+        @else
+            <div class="flex h-40 w-40 items-center justify-center rounded-2xl bg-furlow-blob text-sm font-semibold text-furlow-accent-ink">
+                Belum ada foto
+            </div>
+        @endif
+
+        <div>
+            <p class="text-sm">{{ $hewan->jenis }}@if ($hewan->ras) · {{ $hewan->ras }}@endif</p>
+            @if ($hewan->catatan_kesehatan)
+                <p class="mt-2 text-sm"><span class="font-semibold text-furlow-ink">Catatan kesehatan:</span> {{ $hewan->catatan_kesehatan }}</p>
+            @endif
+        </div>
+    </div>
 
     <h2 class="mb-3 mt-8 font-display text-xl font-semibold text-furlow-ink">Riwayat layanan (5 terbaru)</h2>
 
@@ -39,6 +52,8 @@
                             @endif
                         @endforeach
                     </div>
+                @elseif (in_array($r->status, ['diproses', 'selesai']))
+                    <p class="mt-3 text-sm italic">Belum ada foto untuk layanan ini.</p>
                 @endif
             </div>
         @empty

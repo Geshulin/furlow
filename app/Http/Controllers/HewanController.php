@@ -70,8 +70,20 @@ class HewanController extends Controller
 
     public function destroy(Hewan $hewan)
     {
-        abort_if($hewan->user_id !== Auth::id(), 403);
-        $hewan->delete();
-        return redirect()->route('hewan.index')->with('success', 'Hewan dihapus.');
+    abort_if($hewan->user_id !== Auth::id(), 403);
+
+    $punyaBookingAktif = $hewan->bookings()
+        ->whereIn('status', ['menunggu', 'diterima', 'diproses'])
+        ->exists();
+
+    if ($punyaBookingAktif) {
+        return redirect()->route('hewan.index')->withErrors([
+            'hewan' => "{$hewan->nama} masih punya booking aktif. Batalkan booking itu atau tunggu sampai selesai sebelum menghapus.",
+        ]);
+    }
+
+    $hewan->delete(); // soft delete
+
+    return redirect()->route('hewan.index')->with('success', "{$hewan->nama} dihapus. Riwayatnya tetap tersimpan.");
     }
 }

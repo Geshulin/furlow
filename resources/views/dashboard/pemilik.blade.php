@@ -21,7 +21,7 @@
     <h2 class="mb-3 font-display text-xl font-semibold text-furlow-ink">Hewan saya</h2>
     <div class="grid gap-4 md:grid-cols-2">
         @forelse ($hewanSaya as $h)
-            <x-hewan-card :hewan="$h" />
+            <x-hewan-card :hewan="$h" :aksi="false" />
         @empty
             <p>Belum ada hewan.</p>
         @endforelse

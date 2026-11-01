@@ -11,6 +11,10 @@
         <div class="mb-4 rounded-xl bg-green-100 px-4 py-3 text-sm text-green-800">{{ session('success') }}</div>
     @endif
 
+    @if ($errors->any())
+    <div class="mb-4 rounded-xl bg-red-100 px-4 py-3 text-sm text-red-800">{{ $errors->first() }}</div>
+    @endif
+
     <div class="grid gap-4 md:grid-cols-2">
         @forelse ($hewan as $h)
             <x-hewan-card :hewan="$h" />
