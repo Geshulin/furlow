@@ -72,7 +72,7 @@ class HewanController extends Controller
     {
     abort_if($hewan->user_id !== Auth::id(), 403);
 
-    $punyaBookingAktif = $hewan->bookings()
+    $punyaBookingAktif = $hewan->booking()
         ->whereIn('status', ['menunggu', 'diterima', 'diproses'])
         ->exists();
 
