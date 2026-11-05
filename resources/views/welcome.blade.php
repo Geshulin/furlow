@@ -147,10 +147,13 @@
 
     <footer class="border-t border-furlow-ink/15 py-8 text-center text-sm">© 2026 Furlow. Proyek UKOM.</footer>
 
+    @unless (auth()->user()?->role === 'admin')
     <a href="https://wa.me/{{ config('furlow.wa') }}?text={{ urlencode('Halo min Furlow, aku mau nanya soal layanan nichh') }}"
        target="_blank" rel="noopener"
        class="btn-hover fixed bottom-6 right-5 z-40 rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-white shadow-lg">
         Chat WhatsApp
     </a>
+    @endunless
+    
 </body>
 </html>

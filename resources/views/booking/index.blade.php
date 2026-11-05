@@ -16,7 +16,7 @@
 
     <div class="grid gap-4 md:grid-cols-2">
         @forelse ($bookingSaya as $b)
-            <div class="rounded-2xl border border-furlow-ink/15 bg-white p-5">
+            <div class="min-w-0 rounded-2xl border border-furlow-ink/15 bg-white p-5">
                 <div class="flex items-start justify-between gap-3">
                     <div>
                         <p class="font-display text-lg font-semibold text-furlow-ink">
@@ -33,29 +33,30 @@
 
                 <p class="mt-3 text-sm">
                     <x-rentang-tanggal :booking="$b" />
-                    @if ($b->tanggal_keluar) – {{ $b->tanggal_keluar->translatedFormat('d F Y') }} @endif
                 </p>
 
                 <p class="mt-2 text-sm">
-                Estimasi total:
+                    Estimasi total:
                     <span class="font-semibold text-furlow-ink">{{ rupiah($b->estimasiTotal()) }}</span>
                     <span class="block text-xs">Harga akhir dikonfirmasi petshop sesuai ukuran dan kondisi bulu hewan.</span>
                 </p>
 
                 @if ($b->status === 'ditolak' && $b->alasan_penolakan)
-                    <p class="mt-3 rounded-xl bg-red-50 px-3 py-2 text-sm text-red-800">Alasan: {{ $b->alasan_penolakan }}</p>
+                    <p class="mt-3 break-words rounded-xl bg-red-50 px-3 py-2 text-sm text-red-800 [overflow-wrap:anywhere]">Alasan: {{ $b->alasan_penolakan }}</p>
                 @endif
                 @if ($b->status === 'diproses' && $b->estimasi_selesai)
                     <p class="mt-3 text-sm">Estimasi selesai: {{ $b->estimasi_selesai->translatedFormat('d F Y, H:i') }}</p>
                 @endif
 
                 @if ($b->status === 'menunggu')
-                    <form method="POST" action="{{ route('booking.batal', $b) }}" class="mt-4"
-                          onsubmit="return confirm('Batalkan booking ini?')">
-                        @csrf
-                        @method('PATCH')
-                        <x-secondary-button type="submit">Batalkan</x-secondary-button>
-                    </form>
+                    <x-konfirmasi class="mt-4 inline-block" :action="route('booking.batal', $b)" method="PATCH"
+                                  judul="Batalkan booking?"
+                                  pesan="Booking yang dibatalkan tidak bisa diaktifkan lagi. Kamu bisa mengajukan booking baru."
+                                  tombol="Ya, batalkan">
+                        <x-slot name="trigger">
+                            <x-secondary-button type="button">Batalkan</x-secondary-button>
+                        </x-slot>
+                    </x-konfirmasi>
                 @endif
             </div>
         @empty

@@ -15,7 +15,7 @@ class DemoSeeder extends Seeder
     {
         $budi = User::create([
             'name' => 'Mira',
-            'email' => 'Mira@furlow.demo',
+            'email' => 'mira@furlow.demo',
             'password' => Hash::make('password123'),
             'role' => 'pemilik_hewan',
         ]);

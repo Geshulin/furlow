@@ -28,6 +28,15 @@
             <x-input-error :messages="$errors->get('deskripsi')" class="mt-1" />
         </div>
 
+        <div>
+            <label class="flex items-center gap-2 text-sm">
+                <input type="checkbox" name="butuh_tanggal_keluar" value="1"
+                       @checked(old('butuh_tanggal_keluar'))
+                       class="rounded border-gray-300 text-furlow-ink shadow-sm focus:ring-furlow-ink">
+                Layanan penitipan (wajib isi tanggal keluar saat booking)
+            </label>
+        </div>
+
         <div class="flex items-center gap-3">
             <x-primary-button>Simpan</x-primary-button>
             <a href="{{ route('layanan.index') }}" class="text-sm underline">Batal</a>

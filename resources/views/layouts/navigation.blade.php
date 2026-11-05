@@ -27,16 +27,21 @@
 
     <div class="mt-auto space-y-1 pt-6">
         <a href="{{ route('profile.edit') }}"
-           class="flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm transition hover:bg-furlow-bg">
+           class="flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition
+                  {{ request()->routeIs('profile.*') ? 'bg-furlow-blob text-furlow-accent-ink font-semibold' : 'hover:bg-furlow-bg' }}">
             <x-icon name="profil" />
             Profil
         </a>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button class="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-left text-sm transition hover:bg-furlow-bg">
-                <x-icon name="keluar" />
-                Keluar
-            </button>
-        </form>
+
+        <x-konfirmasi class="block" :action="route('logout')" judul="Keluar dari Furlow?"
+                      pesan="Kamu perlu login lagi untuk masuk." tombol="Ya, keluar" :bahaya="false">
+            <x-slot name="trigger">
+                <button type="button"
+                        class="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-left text-sm font-medium transition hover:bg-furlow-bg">
+                    <x-icon name="keluar" />
+                    Keluar
+                </button>
+            </x-slot>
+        </x-konfirmasi>
     </div>
 </div>

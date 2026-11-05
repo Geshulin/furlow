@@ -19,20 +19,28 @@
             <tbody>
                 @forelse ($layanan as $l)
                     <tr class="border-b last:border-0">
-                        <td class="p-4">{{ $l->nama_layanan }}
+                        <td class="p-4">
+                            {{ $l->nama_layanan }}
                             @if ($l->butuh_tanggal_keluar)
                                 <span class="ml-2 rounded-full bg-furlow-blob px-2 py-0.5 text-xs font-semibold text-furlow-accent-ink">Penitipan</span>
                             @endif
                         </td>
-                        <td class="p-4">{{ rupiah($l->harga) }}</td>
-                        <td class="flex gap-3 p-4">
-                            <a href="{{ route('layanan.edit', $l) }}" class="underline">Edit</a>
-                            <form method="POST" action="{{ route('layanan.destroy', $l) }}"
-                                  onsubmit="return confirm('Hapus layanan ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="text-red-700 underline">Hapus</button>
-                            </form>
+                        <td class="whitespace-nowrap p-4">{{ rupiah($l->harga) }}</td>
+                        <td class="p-4">
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('layanan.edit', $l) }}"
+                                   class="rounded-md border border-furlow-ink px-3 py-1.5 text-xs text-furlow-ink">Edit</a>
+
+                                <x-konfirmasi :action="route('layanan.destroy', $l)" method="DELETE"
+                                              judul="Hapus layanan?"
+                                              pesan="Layanan hilang dari pilihan booking, tapi riwayat booking lama tetap tersimpan."
+                                              tombol="Ya, hapus">
+                                    <x-slot name="trigger">
+                                        <button type="button"
+                                                class="rounded-md border border-red-700 px-3 py-1.5 text-xs text-red-700">Hapus</button>
+                                    </x-slot>
+                                </x-konfirmasi>
+                            </div>
                         </td>
                     </tr>
                 @empty
