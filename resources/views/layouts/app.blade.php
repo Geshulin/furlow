@@ -33,7 +33,7 @@
     <nav class="fixed inset-x-0 bottom-0 z-30 flex justify-around border-t border-furlow-ink/15 bg-white py-3 md:hidden">
         @foreach ($tabs as [$label, $route, $icon])
             <a href="{{ route($route) }}"
-               class="flex flex-col items-center gap-1 text-xs font-medium {{ request()->routeIs($route) ? 'font-bold text-furlow-ink' : '' }}">
+               class="flex flex-col items-center gap-1 text-xs font-medium {{ menu_aktif($route) ? 'font-bold text-furlow-ink' : '' }}">
                 <x-icon :name="$icon" />
                 {{ $label }}
             </a>

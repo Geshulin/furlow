@@ -15,3 +15,14 @@ if (! function_exists('tanggal')) {
         return $tanggal ? Carbon::parse($tanggal)->translatedFormat($format) : '-';
     }
 }
+
+if (! function_exists('menu_aktif')) {
+    function menu_aktif(string $route): bool
+    {
+        $pola = str_ends_with($route, '.index')
+            ? substr($route, 0, -strlen('.index')) . '.*'
+            : $route;
+
+        return request()->routeIs($pola);
+    }
+}

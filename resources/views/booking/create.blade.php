@@ -22,7 +22,7 @@
                 <x-input-label for="hewan_id" value="Hewan" />
                 <select id="hewan_id" name="hewan_id"
                         class="mt-1 w-full rounded-xl border-furlow-ink/20 focus:border-furlow-teal focus:ring-furlow-teal">
-                    <option value="">— Pilih hewan —</option>
+                    <option value="">- Pilih hewan -</option>
                     @foreach ($hewan as $h)
                         <option value="{{ $h->id }}" @selected(old('hewan_id') == $h->id)>{{ $h->nama }} ({{ $h->jenis }})</option>
                     @endforeach
@@ -34,9 +34,9 @@
                 <x-input-label for="layanan_id" value="Layanan" />
                 <select id="layanan_id" name="layanan_id" x-model="pilih"
                         class="mt-1 w-full rounded-xl border-furlow-ink/20 focus:border-furlow-teal focus:ring-furlow-teal">
-                    <option value="">— Pilih layanan —</option>
+                    <option value="">- Pilih layanan -</option>
                     @foreach ($layanan as $l)
-                        <option value="{{ $l->id }}">{{ $l->nama_layanan }} — mulai {{ rupiah($l->harga) }}</option>
+                        <option value="{{ $l->id }}">{{ $l->nama_layanan }} - mulai {{ rupiah($l->harga) }}</option>
                     @endforeach
                 </select>
                 <x-input-error :messages="$errors->get('layanan_id')" class="mt-2" />

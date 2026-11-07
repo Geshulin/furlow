@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Furlow — Penitipan & Grooming Hewan</title>
+    <title>Furlow | Penitipan Hewan</title>
     @include('layouts.partials.head-assets')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -22,6 +22,12 @@
             @endauth
         </nav>
     </header>
+
+ 
+    @php
+        $fotoKandang = 'images/landing.png';
+        $adaFoto = file_exists(public_path($fotoKandang));
+    @endphp
 
     <main>
         <div class="relative overflow-hidden">
@@ -103,8 +109,16 @@
                         </g>
                     </svg>
 
-                    <div class="flex min-h-64 items-center justify-center rounded-3xl border border-furlow-ink/15 bg-white p-6">
-                        <img src="{{ asset('images/logo.svg') }}" alt="" class="h-24 w-24 opacity-90">
+                    {{-- Kartu hero: foto kandang, atau logo jika file foto belum ada --}}
+                    <div class="overflow-hidden rounded-3xl border border-furlow-ink/15 bg-white">
+                        @if ($adaFoto)
+                            <img src="{{ asset($fotoKandang) }}" alt="Ruang penitipan hewan di Furlow"
+                                 class="aspect-[4/3] w-full object-cover">
+                        @else
+                            <div class="flex min-h-64 items-center justify-center p-6">
+                                <img src="{{ asset('images/logo.svg') }}" alt="" class="h-24 w-24 opacity-90">
+                            </div>
+                        @endif
                     </div>
                 </div>
             </section>
@@ -154,6 +168,5 @@
         Chat WhatsApp
     </a>
     @endunless
-    
 </body>
 </html>

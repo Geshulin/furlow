@@ -46,7 +46,7 @@
     </form>
 
      <p class="mt-6 text-center text-sm">
-        Don’t have an account? 
-        <a href="{{ route('register') }}" class="font-semibold text-furlow-ink underline">Sign up</a>
+            Belum punya akun?
+        <a href="{{ route('register') }}" class="font-semibold text-furlow-ink underline">Daftar</a>
     </p>
 </x-guest-layout>
