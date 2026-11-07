@@ -15,17 +15,21 @@
     </a>
 
     @if ($aksi)
-        <div class="mt-4 flex flex-wrap gap-2">
+        <div class="mt-4 flex flex-wrap items-center gap-2">
             <a href="{{ route('hewan.show', $hewan) }}"
                class="rounded-full border border-furlow-ink/20 px-4 py-1.5 text-xs font-semibold text-furlow-ink">Detail</a>
             <a href="{{ route('hewan.edit', $hewan) }}"
                class="rounded-full border border-furlow-ink/20 px-4 py-1.5 text-xs font-semibold text-furlow-ink">Edit</a>
-            <form method="POST" action="{{ route('hewan.destroy', $hewan) }}"
-                  onsubmit="return confirm(@js('Hapus ' . $hewan->nama . '?'))">
-                @csrf
-                @method('DELETE')
-                <button class="rounded-full border border-red-200 px-4 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50">Hapus</button>
-            </form>
+
+            <x-konfirmasi :action="route('hewan.destroy', $hewan)" method="DELETE"
+                          :judul="'Hapus ' . $hewan->nama . '?'"
+                          pesan="Hewan hilang dari daftar, tapi riwayat booking lama tetap tersimpan. Hewan yang masih punya booking aktif tidak bisa dihapus."
+                          tombol="Ya, hapus">
+                <x-slot name="trigger">
+                    <button type="button"
+                            class="rounded-full border border-red-200 px-4 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50">Hapus</button>
+                </x-slot>
+            </x-konfirmasi>
         </div>
     @endif
 </div>

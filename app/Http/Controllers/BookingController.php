@@ -88,13 +88,13 @@ class BookingController extends Controller
 
     $request->validate([
         'status' => ['required', Rule::in(['diterima', 'ditolak', 'diproses', 'selesai'])],
-        'alasan_penolakan' => ['required_if:status,ditolak', 'nullable', 'string', 'max:500'],
+        'alasan_penolakan' => ['required_if:status,ditolak', 'nullable', 'string', 'max:200'],
         'estimasi_selesai' => ['nullable', 'date', 'after_or_equal:' . $booking->tanggal_masuk->toDateString()],
     ], [
         'status.required' => 'Status tujuan wajib dipilih.',
         'status.in' => 'Status tidak valid.',
         'alasan_penolakan.required_if' => 'Alasan penolakan wajib diisi saat menolak booking.',
-        'alasan_penolakan.max' => 'Alasan penolakan maksimal 500 karakter.',
+        'alasan_penolakan.max' => 'Alasan penolakan maksimal 200 karakter.',
         'estimasi_selesai.date' => 'Estimasi selesai tidak valid.',
         'estimasi_selesai.after_or_equal' => 'Estimasi selesai tidak boleh sebelum tanggal masuk.',
     ]);
