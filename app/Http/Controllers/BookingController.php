@@ -31,7 +31,7 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-    // find() otomatis mengabaikan layanan yang sudah di-soft-delete
+   
     $layanan = Layanan::find($request->layanan_id);
 
     $data = $request->validate([
@@ -65,7 +65,7 @@ class BookingController extends Controller
         'tanggal_keluar.after_or_equal' => 'Tanggal keluar tidak boleh sebelum tanggal masuk.',
     ]);
 
-    Booking::create($data); // status otomatis 'menunggu'
+    Booking::create($data);
 
     return redirect()->route('booking.index')
         ->with('success', 'Booking diajukan, menunggu konfirmasi petshop.');
@@ -79,7 +79,7 @@ class BookingController extends Controller
 
     public function updateStatus(Request $request, Booking $booking)
     {
-    // Alur yang diizinkan. Status final (ditolak, selesai, dibatalkan) tidak punya tujuan.
+
     $alur = [
         'menunggu' => ['diterima', 'ditolak'],
         'diterima' => ['diproses'],

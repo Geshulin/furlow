@@ -8,8 +8,8 @@ use Illuminate\Support\Carbon;
 class BookingService
 {
     /**
-     * Jumlah hari = selisih tanggal keluar dan tanggal masuk, minimal 1.
-     * Tanpa tanggal keluar dihitung 1 hari.
+     * Jumlah hari = selisih tanggal keluar dan tanggal masuk, minimal 1
+     * Tanpa tanggal keluar dihitung 1 hari
      */
     public function jumlahHari($tanggalMasuk, $tanggalKeluar = null): int
     {
@@ -24,7 +24,7 @@ class BookingService
     }
 
     /**
-     * Estimasi total = harga layanan (harga mulai dari) x jumlah hari.
+     * Estimasi total = harga layanan (harga mulai dari) x jumlah hari
      */
     public function estimasiTotal(Layanan $layanan, $tanggalMasuk, $tanggalKeluar = null): float
     {

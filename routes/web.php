@@ -9,7 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Models\Layanan;
 
 Route::get('/', function () {
-    $layanan = Layanan::all(); // layanan yang sudah di-soft-delete otomatis tidak ikut
+    $layanan = Layanan::all(); //
     return view('welcome', compact('layanan'));
 });
 
@@ -17,7 +17,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');
 
-// Profil: semua pengguna yang login (admin dan pemilik hewan)
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

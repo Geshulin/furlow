@@ -1,12 +1,9 @@
-
-
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
 Alpine.start();
 
-// Elemen .reveal-scroll muncul halus saat masuk layar
 document.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('.reveal-scroll');
     if (!('IntersectionObserver' in window)) {
