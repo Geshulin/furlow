@@ -16,12 +16,14 @@ class DemoSeeder extends Seeder
         $budi = User::create([
             'name' => 'Mira',
             'email' => 'mira@furlow.demo',
+            'alamat' => 'Jl. Melati No. 12, Jakarta Selatan',
             'password' => Hash::make('password123'),
             'role' => 'pemilik_hewan',
         ]);
         $sari = User::create([
             'name' => 'Alok',
             'email' => 'alok@furlow.demo',
+            'alamat' => 'Jl. Kenangan No. 67, Jawa Barat',
             'password' => Hash::make('password123'),
             'role' => 'pemilik_hewan',
         ]);
