@@ -47,6 +47,16 @@
             @endif
         </div>
 
+        @if ($user->role === 'pemilik_hewan')
+    <div>
+        <x-input-label for="alamat" value="Alamat" />
+        <textarea id="alamat" name="alamat" rows="3"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">{{ old('alamat', $user->alamat) }}</textarea>
+        <p class="mt-1 text-xs">Dipakai untuk layanan antar jemput hewan.</p>
+        <x-input-error class="mt-2" :messages="$errors->get('alamat')" />
+    </div>
+    @endif
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 

@@ -16,6 +16,14 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+                <!-- Alamat -->
+        <div class="mt-4">
+            <x-input-label for="alamat" value="Alamat" />
+            <textarea id="alamat" name="alamat" rows="3" required
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">{{ old('alamat') }}</textarea>
+            <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />

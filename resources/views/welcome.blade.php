@@ -7,7 +7,7 @@
     @include('layouts.partials.head-assets')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-furlow-bg font-sans text-furlow-body antialiased">
+<body class="bg-furlow-pattern font-sans text-furlow-body antialiased">
     <header class="mx-auto flex max-w-6xl items-center justify-between px-5 py-6">
         <a href="/" class="flex items-center gap-2">
             <img src="{{ asset('images/logo.svg') }}" alt="Logo Furlow" class="h-8 w-8">
@@ -109,7 +109,7 @@
                         </g>
                     </svg>
 
-                    {{-- Kartu hero: foto kandang, atau logo jika file foto belum ada --}}
+                    {{-- Kartu hero --}}
                     <div class="overflow-hidden rounded-3xl border border-furlow-ink/15 bg-white">
                         @if ($adaFoto)
                             <img src="{{ asset($fotoKandang) }}" alt="Ruang penitipan hewan di Furlow"

@@ -182,9 +182,20 @@ html { scroll-behavior: smooth; }
     .reveal { animation: none; opacity: 1; transform: none; }
 }
 
-/* Hormati pengguna yang mematikan animasi */
+/* user non-animasi */
 @media (prefers-reduced-motion: reduce) {
     .blob { animation: none; }
     .paw-trail svg { animation: none; opacity: 1; }
     .blob-2, .dog-tail, .dog-head, .dog-paw, .heart, .cat-tail, .cat-ear, .cat-head { animation: none; }
+}
+
+.bg-furlow-pattern {
+    background-color: #F2F5EE;
+    background-image:
+        radial-gradient(circle at 10% 6%, rgba(251, 223, 192, 0.60) 0, transparent 36%),
+        radial-gradient(circle at 94% 30%, rgba(110, 155, 143, 0.20) 0, transparent 34%),
+        radial-gradient(circle at 18% 95%, rgba(232, 163, 61, 0.16) 0, transparent 32%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='%236E9B8F' fill-opacity='0.20'%3E%3Cg transform='translate(24 28) rotate(-18) scale(1.7)'%3E%3Ccircle cx='12' cy='16' r='4.2'/%3E%3Ccircle cx='5' cy='9' r='1.8'/%3E%3Ccircle cx='19' cy='9' r='1.8'/%3E%3Ccircle cx='8.4' cy='5.6' r='1.6'/%3E%3Ccircle cx='15.6' cy='5.6' r='1.6'/%3E%3C/g%3E%3Cg transform='translate(120 112) rotate(22) scale(1.4)'%3E%3Ccircle cx='12' cy='16' r='4.2'/%3E%3Ccircle cx='5' cy='9' r='1.8'/%3E%3Ccircle cx='19' cy='9' r='1.8'/%3E%3Ccircle cx='8.4' cy='5.6' r='1.6'/%3E%3Ccircle cx='15.6' cy='5.6' r='1.6'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+    background-attachment: fixed, fixed, fixed, scroll;
 }

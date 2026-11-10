@@ -8,7 +8,7 @@
     @include('layouts.partials.head-assets')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-furlow-bg font-sans text-furlow-body antialiased">
+<body class="bg-furlow-pattern font-sans text-furlow-body antialiased">
     <div class="flex min-h-screen flex-col items-center justify-center px-5 text-center">
         <p class="font-display text-7xl font-bold text-furlow-accent">{{ $kode }}</p>
         <h1 class="mt-4 font-display text-2xl font-semibold text-furlow-ink">{{ $judul }}</h1>

@@ -16,7 +16,7 @@
         @include('layouts.partials.head-assets')
     </head>
     <body class="font-sans text-furlow-body antialiased">
-        <div class="flex min-h-screen flex-col items-center justify-center bg-furlow-bg px-4">
+        <div class="flex min-h-screen flex-col items-center justify-center bg-furlow-pattern px-4">
             <a href="/" class="mb-6 flex items-center gap-2">
                 <img src="{{ asset('images/logo.svg') }}" alt="Logo Furlow" class="h-9 w-9">
                 <span class="font-display text-3xl font-bold text-furlow-ink">Furlow</span>

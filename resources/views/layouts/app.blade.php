@@ -7,7 +7,7 @@
     @include('layouts.partials.head-assets')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-furlow-bg font-sans text-furlow-body antialiased">
+<body class="bg-furlow-pattern font-sans text-furlow-body antialiased">
     <div class="min-h-screen md:flex">
         {{-- Sidebar: hanya desktop --}}
         <aside class="hidden border-r border-furlow-ink/15 bg-white p-5 md:sticky md:top-0 md:block md:h-screen md:w-60 md:shrink-0">

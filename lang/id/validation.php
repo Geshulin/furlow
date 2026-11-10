@@ -40,5 +40,6 @@ return [
         'tanggal_masuk' => 'Tanggal masuk',
         'tanggal_keluar' => 'Tanggal keluar',
         'alasan_penolakan' => 'Alasan penolakan',
+        'alamat' => 'Alamat',
     ],
 ];

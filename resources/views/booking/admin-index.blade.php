@@ -30,7 +30,12 @@
             <tbody>
                 @forelse ($semuaBooking as $b)
                     <tr class="border-b align-top last:border-0">
-                        <td class="p-4">{{ $b->hewan->user->name }}</td>
+                        <td class="p-4">
+                        {{ $b->hewan->user->name }}
+                        @if ($b->hewan->user->alamat)
+                            <p class="mt-1 max-w-[14rem] break-words text-xs text-gray-500">{{ $b->hewan->user->alamat }}</p>
+                        @endif
+                    </td>
                         <td class="p-4">
                             {{ $b->hewan->nama }}
                             @if ($b->hewan->trashed()) <span class="text-xs text-gray-500">(dihapus)</span> @endif
